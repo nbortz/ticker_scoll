@@ -7,7 +7,13 @@ import pygame
 TICKERS = [('bitcoin', 'BTC'),
           ('ethereum', 'ETH'),
           ('solana', 'SOL'),
-          ('hype', 'HYPE')]
+          ('hype', 'HYPE'),
+          ('dogecoin', 'DOGE'),
+          ('zcash', 'ZEC'),
+          ('aster', 'ASTR'),
+          ('plasma', 'XPL'),
+          ('chainlink', 'LINK'),
+          ('pendle', 'PENDLE'),]
 
 VS_CURRENCY = 'usd'
 FETCH_INTERVAL = 30
