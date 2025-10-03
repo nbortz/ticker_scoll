@@ -7,9 +7,10 @@ import pygame
 TICKERS = [('bitcoin', 'BTC'),
           ('ethereum', 'ETH'),
           ('solana', 'SOL'),
-          ('hype', 'HYPE'),
+          ('hyperliquid', 'HYPE'),
           ('dogecoin', 'DOGE'),
           ('chainlink', 'LINK'),
+          ('zcash', 'ZEC'),
           ('pendle', 'PENDLE'),
           ('fartcoin', 'FARTCOIN')]
 
@@ -82,6 +83,7 @@ def build_ticker_surface(data):
 def main():
     next_fetch = 0
     ticker_surf = None
+    text_width = 0
     x = WIDTH
 
     running = True
@@ -96,8 +98,8 @@ def main():
             data = fetchPrices()
             ticker_surf = build_ticker_surface(data)
             text_width = ticker_surf.get_width()
-            x = WIDTH #reset scroll position
             next_fetch = now + FETCH_INTERVAL
+            # Do NOT reset x here
 
         screen.fill(pygame.Color('black'))
         screen.blit(ticker_surf, (x, (HEIGHT - ticker_surf.get_height()) // 2))
@@ -105,9 +107,9 @@ def main():
 
         x -= SCROLL_SPEED
         if x < -text_width:
-            x = WIDTH
+            x = WIDTH  # Only reset x when the ticker has fully scrolled off
 
-        clock.tick(60)
+        clock.tick(90)
     pygame.quit()
     sys.exit()
 
