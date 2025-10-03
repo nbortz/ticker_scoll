@@ -40,19 +40,19 @@ def fetchPrices():
         return {}
 
 def build_ticker_surface(data):
+    font = pygame.font.SysFont("Courier New", 112)
     parts = []
-    color = ''
-    print(data)
+    total_width = 0
+    heights = []
+
+    # Render each coin's text with its own color
     for coin_id, sym in TICKERS:
         info = data.get(coin_id, {})
-
-        # Pull raw values (could be None)
         raw_price  = info.get(VS_CURRENCY)
         raw_change = info.get(f'{VS_CURRENCY}_24h_change')
-
-        # Coerce None → 0.0
         price  = raw_price  if raw_price  is not None else 0.0
         change = raw_change if raw_change is not None else 0.0
+
         if change > 0:
             color = 'green'
         elif change < 0:
@@ -60,13 +60,20 @@ def build_ticker_surface(data):
         else:
             color = 'white'
 
-        # Now these are guaranteed floats
-        parts.append(f"{sym}:{price:,.0f}{change:+.2f}%")
+        text = f"{sym}:{price:,.0f} {change:+.2f}%   "
+        surf = font.render(text, True, pygame.Color(color))
+        parts.append(surf)
+        total_width += surf.get_width()
+        heights.append(surf.get_height())
 
+    # Create a surface wide enough for all parts
+    ticker_surface = pygame.Surface((total_width, max(heights)), pygame.SRCALPHA)
+    x = 0
+    for surf in parts:
+        ticker_surface.blit(surf, (x, 0))
+        x += surf.get_width()
 
-    text = "   ".join(parts) + "   "
-    font = pygame.font.SysFont("Courier New", 112)
-    return font.render(text, True, pygame.Color(color))
+    return ticker_surface
 
 def main():
     next_fetch = 0
@@ -96,7 +103,7 @@ def main():
         if x < -text_width:
             x = WIDTH
 
-        clock.tick(30)
+        clock.tick(90)
     pygame.quit()
     sys.exit()
 
