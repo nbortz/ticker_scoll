@@ -9,11 +9,9 @@ TICKERS = [('bitcoin', 'BTC'),
           ('solana', 'SOL'),
           ('hype', 'HYPE'),
           ('dogecoin', 'DOGE'),
-          ('zcash', 'ZEC'),
-          ('aster', 'ASTR'),
-          ('plasma', 'XPL'),
           ('chainlink', 'LINK'),
-          ('pendle', 'PENDLE'),]
+          ('pendle', 'PENDLE'),
+          ('fartcoin', 'FARTCOIN')]
 
 VS_CURRENCY = 'usd'
 FETCH_INTERVAL = 30
@@ -109,7 +107,7 @@ def main():
         if x < -text_width:
             x = WIDTH
 
-        clock.tick(90)
+        clock.tick(60)
     pygame.quit()
     sys.exit()
 
